@@ -18,9 +18,11 @@ def entropy(y):
     """
     EPS = 0.0005
 
-    # YOUR CODE HERE
+    n_objects = y.shape[0]
+    p = np.sum(y, axis=0) / n_objects # p: (n_classes, )
+    entropy = -np.sum(p * np.log(p + EPS))
     
-    return 0.
+    return entropy
     
 def gini(y):
     """
@@ -38,8 +40,11 @@ def gini(y):
     """
 
     # YOUR CODE HERE
+    n_objects = y.shape[0]
+    p = np.sum(y, axis=0) / n_objects # p: (n_classes, )
+    gini = 1 - np.sum(p ** 2)
     
-    return 0.
+    return gini 
     
 def variance(y):
     """
@@ -57,8 +62,11 @@ def variance(y):
     """
     
     # YOUR CODE HERE
+    n_objects = y.shape[0]
+    mean = np.mean(y)
+    variance = np.sum((y - mean) ** 2) / n_objects
     
-    return 0.
+    return variance
 
 def mad_median(y):
     """
@@ -77,8 +85,12 @@ def mad_median(y):
     """
 
     # YOUR CODE HERE
-    
-    return 0.
+    n_objects = y.shape[0]
+    median = np.median(y)
+
+    mad_median = np.sum(np.abs(y - median)) / n_objects
+
+    return mad_median
 
 
 def one_hot_encode(n_classes, y):
@@ -155,7 +167,12 @@ class DecisionTree(BaseEstimator):
         """
 
         # YOUR CODE HERE
-        
+        X_left = X_subset[X_subset[:, feature_index] < threshold]
+        X_right = X_subset[X_subset[:, feature_index] >= threshold]
+
+        y_left = y_subset[X_subset[:, feature_index] < threshold]
+        y_right = y_subset[X_subset[:, feature_index] >= threshold]
+
         return (X_left, y_left), (X_right, y_right)
     
     def make_split_only_y(self, feature_index, threshold, X_subset, y_subset):
@@ -189,6 +206,8 @@ class DecisionTree(BaseEstimator):
         """
 
         # YOUR CODE HERE
+        y_left = y_subset[X_subset[:, feature_index] < threshold]
+        y_right = y_subset[X_subset[:, feature_index] >= threshold]
         
         return y_left, y_right
 
@@ -215,6 +234,24 @@ class DecisionTree(BaseEstimator):
 
         """
         # YOUR CODE HERE
+        match(self.criterion_name):
+            case 'gini' | 'entropy':
+                best_score = np.inf
+                best_feature_index = None
+                best_threshold = None
+                for feature_index in range(X_subset.shape[1]):
+                    thresholds = np.unique(X_subset[:, feature_index])
+                    for threshold in thresholds:
+                        y_left, y_right = self.make_split_only_y(feature_index, threshold, X_subset, y_subset)
+                        score = (len(y_left) * self.criterion(y_left) + len(y_right) * self.criterion(y_right)) / len(y_subset)
+                        if score < best_score:
+                            best_score = score
+                            best_feature_index = feature_index
+                            best_threshold = threshold
+                feature_index = best_feature_index
+                threshold = best_threshold
+            
+
         return feature_index, threshold
     
     def make_tree(self, X_subset, y_subset):
@@ -237,6 +274,14 @@ class DecisionTree(BaseEstimator):
         """
 
         # YOUR CODE HERE
+        while self.depth < self.max_depth:
+            feature_index, threshold = self.choose_best_split(X_subset, y_subset)
+            (X_left, y_left), (X_right, y_right) = self.make_split(feature_index, threshold, X_subset, y_subset)
+
+            new_node = Node(feature_index, threshold)
+            new_node.left_child = self.make_tree(X_left, y_left)
+            new_node.right_child = self.make_tree(X_right, y_right)
+
         
         return new_node
         

@@ -1,0 +1,27 @@
+[project]
+name = "ml-course"
+version = "0.1.0"
+description = "Mastering Machine Learning Course"
+readme = "README.md"
+authors = [
+    { name = "PalmPalmPalmPalmPalm", email = "chitipat.c2548@gmail.com" }
+]
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "scikit-learn<1.2",
+    "numpy<2",
+    "pandas",
+    "matplotlib",
+    "pytest>=9.2.0",
+]
+
+[project.scripts]
+ml-course = "ml_course:main"
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+]
