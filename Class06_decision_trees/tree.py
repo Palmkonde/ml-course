@@ -234,27 +234,37 @@ class DecisionTree(BaseEstimator):
 
         """
         # YOUR CODE HERE
-        match(self.criterion_name):
-            case 'gini' | 'entropy':
-                best_score = np.inf
-                best_feature_index = None
-                best_threshold = None
-                for feature_index in range(X_subset.shape[1]):
-                    thresholds = np.unique(X_subset[:, feature_index])
-                    for threshold in thresholds:
-                        y_left, y_right = self.make_split_only_y(feature_index, threshold, X_subset, y_subset)
-                        score = (len(y_left) * self.criterion(y_left) + len(y_right) * self.criterion(y_right)) / len(y_subset)
-                        if score < best_score:
-                            best_score = score
-                            best_feature_index = feature_index
-                            best_threshold = threshold
-                feature_index = best_feature_index
-                threshold = best_threshold
+        best_score = -np.inf
+        feature_index = None
+        threshold = None
+
+        H_Q = self.criterion(y_subset)
+
+        for j in range(X_subset.shape[1]):
+            thresholds = np.unique(X_subset[:, j]) # iterate over unique values of each features consider it as threshold
+
             
+            for t in thresholds:
+                y_left, y_right = self.make_split_only_y(j, t, X_subset, y_subset)
+
+                if not y_left.size or not y_right.size:
+                    continue  
+
+                # H(Q) - (|L|/|Q|) * H(L) - (|R|/|Q|) * H(R)
+                L_len = len(y_left)
+                R_len = len(y_right)
+                Q_len = len(y_subset)
+
+                score = H_Q - (L_len / Q_len) * self.criterion(y_left) - (R_len / Q_len) * self.criterion(y_right)
+
+                if score > best_score:
+                    best_score = score
+                    feature_index = j
+                    threshold = t
 
         return feature_index, threshold
     
-    def make_tree(self, X_subset, y_subset):
+    def make_tree(self, X_subset, y_subset, depth=0):
         """
         Recursively builds the tree
         
@@ -274,17 +284,32 @@ class DecisionTree(BaseEstimator):
         """
 
         # YOUR CODE HERE
-        while self.depth < self.max_depth:
-            feature_index, threshold = self.choose_best_split(X_subset, y_subset)
-            (X_left, y_left), (X_right, y_right) = self.make_split(feature_index, threshold, X_subset, y_subset)
-
-            new_node = Node(feature_index, threshold)
-            new_node.left_child = self.make_tree(X_left, y_left)
-            new_node.right_child = self.make_tree(X_right, y_right)
-
+        proba = None
+        if self.classification:
+            proba = np.mean(y_subset, axis=0)
+        elif self.criterion_name == 'variance':
+            proba = np.mean(y_subset)
+        else:
+            proba = np.median(y_subset)
         
+        if (depth >= self.max_depth or
+            len(y_subset) < self.min_samples_split or
+            len(np.unique(y_subset, axis=0)) == 1):
+            return Node(None, None, proba=proba)
+
+        # Split data
+        feature_index, threshold = self.choose_best_split(X_subset, y_subset)
+        if feature_index is None:
+            return Node(None, None, proba=proba)
+
+        (X_left, y_left), (X_right, y_right) = self.make_split(feature_index, threshold, X_subset, y_subset)
+
+        new_node = Node(feature_index, threshold, proba=proba)
+        new_node.left_child = self.make_tree(X_left, y_left, depth + 1)
+        new_node.right_child = self.make_tree(X_right, y_right, depth + 1)
+
         return new_node
-        
+
     def fit(self, X, y):
         """
         Fit the model from scratch using the provided data
@@ -326,9 +351,27 @@ class DecisionTree(BaseEstimator):
         """
 
         # YOUR CODE HERE
-        
+        if self.classification:
+            y_predicted_probs = self.predict_proba(X)
+            y_predicted = one_hot_decode(y_predicted_probs)
+
+        else:
+            n_objects = X.shape[0]
+            y_predicted = np.zeros((n_objects, 1))
+
+            for row, obj in enumerate(X):
+                current_node = self.root
+
+                while current_node.left_child is not None and current_node.right_child is not None:
+                    if obj[current_node.feature_index] < current_node.value:
+                        current_node = current_node.left_child
+                    else:
+                        current_node = current_node.right_child
+
+                y_predicted[row] = current_node.proba
+
         return y_predicted
-        
+
     def predict_proba(self, X):
         """
         Only for classification
@@ -348,5 +391,18 @@ class DecisionTree(BaseEstimator):
         assert self.classification, 'Available only for classification problem'
 
         # YOUR CODE HERE
-        
+        n_objects = X.shape[0]
+        y_predicted_probs = np.zeros((n_objects, self.n_classes))
+
+        for row, obj in enumerate(X):
+            current_node = self.root
+
+            while current_node.left_child is not None and current_node.right_child is not None:
+                if obj[current_node.feature_index] < current_node.value:
+                    current_node = current_node.left_child
+                else:
+                    current_node = current_node.right_child
+                
+            y_predicted_probs[row] = current_node.proba
+
         return y_predicted_probs
