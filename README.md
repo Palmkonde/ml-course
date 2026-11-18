@@ -1,4 +1,4 @@
-# Masters Machine Learning, Harbour.Space, BKK, Oct 2025.
+# Masters Machine Learning, Harbour.Space, BKK, Nov 2026.
 ### Semester content:
 
 [ContestID_W01]: 
@@ -29,9 +29,9 @@
 [Slides_W03]: ../master/Class03_linear_regression/HS.BKK.2026.M05.ML.Class03.pdf
 [Slides_W04]: ../master/Class04_linear_classification/HS.BKK.2026.M05.ML.Class04.pdf
 [Slides_W05]: ../master/Class05_sgd_torch_pca/HS.BKK.2026.M05.ML.Class05.pdf
-[Slides_W06]: ../master/Class06_trees/HS.BKK.2026.M05.ML.Class06.pdf
-[Slides_W07]: ../master/Class07_gradient_boosting/BKK.2025.ML.Class07.pdf
-[Slides_W08]: ../master/Class08_intro_to_DL/BKK.2025.ML.Class08.pdf
+[Slides_W06]: ../master/Class06_decision_trees/HS.BKK.2026.M05.ML.Class06.pdf
+[Slides_W07]: ../master/Class07_bagging_boosting/HS.BKK.2026.M05.ML.Class07.pdf
+[Slides_W08]: ../master/Class08_bvt_classic_cv/HS.BKK.2026.M05.ML.Class08.pdf
 [Slides_W09]: ../master/Class09_NN_regularization/BKK.2025.ML.Class09.pdf
 [Slides_W10]: ../master/Class10_CNN/BKK.2025.ML.Class10.pdf
 [Slides_W11]: ../master/Class11_CV/BKK.2025.ML.Class11.pdf
@@ -45,10 +45,11 @@
 | 04     | Linear Classification  			    | [Slides][Slides_W04] | [Test][WarmUp_test_W04] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class04_linear_classification/Class04_logreg_intro_to_pytorch.ipynb) |    |     |
 | 05     | SGD, PCA, Torch        			    | [Slides][Slides_W05] | [Test][WarmUp_test_W05] | See practice <br> for Class04  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class05_sgd_torch_pca/assignment_class05_torch_linear_models.ipynb) <br> [Submit](https://forms.gle/Usy3QECJraRnuhtQ9) | 20.11.2026 13:00 UTC+7 |
 | 06     | Decision Trees                       | [Slides][Slides_W06] | [Test][WarmUp_test_W06] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class06_decision_trees/Class06_decision_trees_practice.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class06_decision_trees/Class06_ha_decision_tree.ipynb) <br> [Submit](https://contest.yandex.ru/contest/103351/problems/D/?lang=en) | 23.11.2026 13:00 UTC+7 |
+| 07     | Bagging, Gradient Boosting                    | [Slides][Slides_W07] | [Test][WarmUp_test_W07] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class07_bagging_boosting/Class07_gradient_boosting.ipynb) |   |   |
+| 08     | Bias/Variance, Classic CV    | [Slides][Slides_W08] | [Test][WarmUp_test_W08] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class08_bvt_classic_cv/Class_08_classic_cv_practice.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class08_bvt_classic_cv/Class_08_home_assignment_classification.ipynb) <br> [Submit](https://contest.yandex.ru/contest/103351/problems/E/?lang=en) | 25.11.2026 13:00 UTC+7 |
 
 <!---
 | 05     | Classic CV                           |                      |                         | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class05_classic_CV/Class_05_classic_cv_practice.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class05_classic_CV/Class_05_home_assignment_classification.ipynb) | 10.10.2025 13:00 UTC+7 |
-| 07     | Gradient Boosting                    | [Slides][Slides_W07] | [Test][WarmUp_test_W07] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class07_gradient_boosting/Class07_gradient_boosting.ipynb) |   |   |
 | 08     | Bias/Variance, Intro to DL           | [Slides][Slides_W08] | [Test][WarmUp_test_W08] |              | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class08_intro_to_DL/Class08_nn_from_scratch.ipynb) (optional) | 18.10.2025 13:00 UTC+7 |
 | 09     | NN Regularization                    | [Slides][Slides_W09] | [Test][WarmUp_test_W09] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class09_NN_regularization/Class09_practice_pytorch_and_dataloaders.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class09_NN_regularization/Class09_hw_fmnist_overfitting.ipynb) | 15.10.2025 13:00 UTC+7  |
 | 10     | CNNs and Image Processing            | [Slides][Slides_W10] | [Test][WarmUp_test_W10] | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class10_CNN/Class10_practice_cnns_and_image_classification_en.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/IvanSol/ml-course/blob/master/Class10_CNN/Class10_hw_dogs.ipynb) | 17.10.2025 13:00 UTC+7 |
