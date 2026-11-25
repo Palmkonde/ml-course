@@ -1,0 +1,16 @@
+[project]
+name = "mnist-vae-seminar"
+version = "0.1.0"
+requires-python = ">=3.11,<3.15"
+dependencies = [
+    "torch>=2.10,<3",
+    "torchvision>=0.25,<1",
+    "numpy>=1.26,<3",
+    "matplotlib>=3.8,<4",
+    "scikit-learn>=1.6,<2",
+    "jupyterlab>=4,<5",
+    "nbconvert>=7,<8",
+]
+
+[tool.uv]
+package = false
